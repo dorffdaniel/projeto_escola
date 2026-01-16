@@ -1,0 +1,23 @@
+.main {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0e161d;
+}
+
+.cardInicial {
+    background: #a3c9e9;
+    border-radius: .5rem;
+    padding: 1.5rem 1rem;
+}
+
+.cardInicial span {
+    border-bottom: 1px solid #0560aa;
+    color: #0560aa;
+    cursor: pointer;
+}
+
+.ocultar {
+    display: none;
+}
