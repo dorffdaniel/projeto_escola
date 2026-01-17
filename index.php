@@ -27,7 +27,7 @@
                         <input type="password" class="form-control" id="senhaLogin">
                     </div>
 
-                    <button type="button" class="btn btn-primary mb-2">Entrar</button>
+                    <button type="button" class="btn btn-primary mb-2" onclick="login()">Entrar</button>
 
                     <p>nao tem uma conta <span onclick="btnCadastrar()">Cadastrar</span></p>
 
@@ -68,7 +68,7 @@
 
                     <div class="mb-3">
                         <label for="formGroupExampleInput" class="form-label">Senha: </label>
-                        <input type="password" class="form-control" id="senhaLogin">
+                        <input type="password" class="form-control" id="senhaCad">
                     </div>
 
                     <button type="button" class="btn btn-primary mb-2" onclick="cadastrar()">Cadastrar</button>
@@ -87,6 +87,7 @@
     <script src="assets/js/script.js"></script>
     <script src="assets/js/sweetalert.js"></script>
     <script src="assets/js/alerta.js"></script>
+    <script src="assets/js/login.js"></script>
 
 </body>
 
