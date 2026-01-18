@@ -33,4 +33,11 @@ class Login
             return json_encode(["erro" => "Senha incorreta"]);
         }
     }
+
+    function logout()
+    {
+        session_destroy();
+
+        return "Obrigado";
+    }
 }

@@ -37,9 +37,8 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <button class="btn btn-outline-danger">Sair</button>
-                </form>
+                <button type="submit" class="btn btn-outline-danger" onclick="logout()">Sair</button>
+
             </div>
         </div>
     </nav>

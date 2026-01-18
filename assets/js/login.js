@@ -11,7 +11,7 @@ function login() {
 
     dados.append('email', emailLogin);
     dados.append('senha', senha);
-    dados.append('op', 1);
+    dados.append('op', 'login');
 
     $.ajax({
         url: 'assets/controller/login/controllerlogin.php',
@@ -28,7 +28,11 @@ function login() {
             console.log(resp);
 
             if (resp.msg) {
-                window.location.href = './colaborador.php';
+                alerta("success", "Bem-vindo")
+                setTimeout(() => {
+                    window.location.href = './colaborador.php';
+                }, 1500);
+
             } else if (resp.erro) {
                 alerta("error", resp.erro);
             }
@@ -38,4 +42,36 @@ function login() {
         .fail(function (jqXHR, textStatus) {
             console.log(textStatus)
         })
+}
+
+
+function logout() {
+    let dados = new FormData();
+    dados.append('op', 'logout');
+
+    $.ajax({
+        url: 'assets/controller/login/controllerlogin.php',
+        method: 'POST',
+        data: dados,
+        dataType: 'html',
+        cache: false,
+        contentType: false,
+        processData: false
+    })
+
+        .done(function (res) {
+
+            alerta("success", res);
+            console.log(res)
+
+            setTimeout(() => {
+                window.location.href = 'index.php';
+            }, 1500);
+
+        })
+
+        .fail(function (textStatus) {
+            console.log(textStatus)
+        })
+
 }
