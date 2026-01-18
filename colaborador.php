@@ -59,15 +59,35 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
     </div>
 
 
-    <h2 class="text-center mt-2">SEJA BEM VINDO AO LANÇAMENTO DE NOTAS </h2>
+    <h2 class="text-center mt-2">LANÇAMENTO DE NOTAS </h2>
+    <h4 class="text-center">Escola Tech</h4>
 
-    <div class="card">
-        <select name="" id="turma" class="w-25">
+    <section id="selecionarTurma">
+        <div class="card">
+            <select name="" id="turma" onchange="getAlunosPorTurma()">
 
-        </select>
-    </div>
+            </select>
+        </div>
+    </section>
+    <section id="tabelaTurma">
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>nome</th>
+                        <th>Primeiro B</th>
+                        <th>Segundo B</th>
+                        <th>Terceiro B</th>
+                        <th>Quarto B</th>
+                        <th>Nota Final</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="resTabelaAluno"></tbody>
+            </table>
+        </div>
 
-
+    </section>
 
 </main>
 
@@ -82,3 +102,4 @@ include_once __DIR__ . '/../projetoescola/assets/pages/footer.php';
 ?>
 
 <script src="assets/js/colaborador.js"></script>
+<script src="assets/js/lancamentoNota/lancamentoNota.js"></script>

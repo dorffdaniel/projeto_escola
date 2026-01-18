@@ -31,3 +31,17 @@
 #dadosPerfil span {
     font-weight: 300;
 }
+
+#selecionarTurma .card {
+    height: 10rem;
+    background-color: #8db6d8;
+}
+
+#selecionarTurma #turma {
+    width: 15rem;
+    outline: none;
+    margin: .5rem;
+    border-radius: .2rem;
+    padding: .5rem;
+    cursor: pointer;
+}
