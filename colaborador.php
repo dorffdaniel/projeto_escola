@@ -58,6 +58,17 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
         </div>
     </div>
 
+
+    <h2 class="text-center mt-2">SEJA BEM VINDO AO LANÇAMENTO DE NOTAS </h2>
+
+    <div class="card">
+        <select name="" id="turma" class="w-25">
+
+        </select>
+    </div>
+
+
+
 </main>
 
 

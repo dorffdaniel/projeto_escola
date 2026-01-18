@@ -12,4 +12,8 @@ if ($_POST['op'] && $_POST['op'] == 'getColab') {
 
     $resp = $colab->getColaborador($id);
     echo $resp;
+} else if ($_POST['op'] == 'getTurma') {
+    $resp = $colab->getTurmas();
+
+    echo $resp;
 }
