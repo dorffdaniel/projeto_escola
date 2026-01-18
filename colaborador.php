@@ -71,7 +71,7 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
     </section>
     <section id="tabelaTurma">
         <div class="card">
-            <table>
+            <table class="table table-striped" id="tabelaDEfuncAtivos">
                 <thead>
                     <tr>
                         <th>nome</th>
@@ -100,6 +100,6 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
 include_once __DIR__ . '/../projetoescola/assets/pages/footer.php';
 
 ?>
-
+<script src="assets/js/datatable.js"></script>
 <script src="assets/js/colaborador.js"></script>
 <script src="assets/js/lancamentoNota/lancamentoNota.js"></script>

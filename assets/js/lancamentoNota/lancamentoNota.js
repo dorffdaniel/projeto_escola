@@ -39,9 +39,19 @@ function getTurmas() {
 
 }
 
-
 function getAlunosPorTurma() {
+
+    if ($.fn.DataTable.isDataTable('#tabelaDEfuncAtivos')) {
+        $('#tabelaDEfuncAtivos').DataTable().destroy();
+    }
+
     let idTurm = $("#turma").val();
+
+    if (idTurm == "-1") {
+        alerta("warning", "Selecione uma turma");
+        return;
+    }
+
     let dados = new FormData();
     dados.append('idTurm', idTurm);
     dados.append('op', 'getAlunoTurma')
@@ -57,9 +67,31 @@ function getAlunosPorTurma() {
     })
 
         .done(function (msg) {
-            console.log(msg)
-        })
 
+            let mens = `<tr>`;
+            mens += `<td> ${msg.nome} </td>`
+            mens += `<td> not </td>`
+            mens += `<td> not2 </td>`
+            mens += `<td> not3 </td>`
+            mens += `<td> not4 </td>`
+            mens += `<td> notf </td>`
+            mens += `<td> botoes </td>`
+            mens += `</tr>`;
+
+
+            $("#resTabelaAluno").html(mens);
+
+            $('#tabelaDEfuncAtivos').DataTable({
+                responsive: true,
+                autoWidth: false
+            });
+
+            if (msg.erro) {
+                alerta("warning", msg.erro);
+                return;
+            }
+
+        })
 
         .fail(function (textStatus) {
             console.log(textStatus)
