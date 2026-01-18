@@ -21,3 +21,13 @@
 .ocultar {
     display: none;
 }
+
+/* pagina colaborador.php */
+
+#dadosPerfil p {
+    font-weight: 700;
+}
+
+#dadosPerfil span {
+    font-weight: 300;
+}
