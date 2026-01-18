@@ -18,7 +18,7 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
 
                 <div class="mb-3">
                     <label for="formGroupExampleInput" class="form-label">Senha: </label>
-                    <input type="password" class="form-control" id="senhaLogin">
+                    <input type="password" class="form-control" id="senhaLogin" placeholder="Digite sua senha">
                 </div>
 
                 <button type="button" class="btn btn-primary mb-2" onclick="login()">Entrar</button>
@@ -62,7 +62,7 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
 
                 <div class="mb-3">
                     <label for="formGroupExampleInput" class="form-label">Senha: </label>
-                    <input type="password" class="form-control" id="senhaCad">
+                    <input type="password" class="form-control" id="senhaCad" placeholder="Digite uma senha">
                 </div>
 
                 <button type="button" class="btn btn-primary mb-2" onclick="cadastrar()">Cadastrar</button>
