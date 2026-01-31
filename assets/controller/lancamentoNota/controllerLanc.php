@@ -12,8 +12,17 @@ if ($_POST['op'] == 'getTurma') {
 
     echo $resp;
 } else if ($_POST['op'] == 'getAlunoTurma') {
-    $idTurm = $_POST['idTurm'];
-    $resp = $lanc->getAlunosPorTurma($idTurm);
+    $idTurm = (int) $_POST['idTurm'];
 
+    if ($idTurm < 0) {
+        echo json_encode(["erro" => "Selecione uma turma"]);
+        exit;
+    }
+
+    $resp = $lanc->getAlunosPorTurma($idTurm);
+    echo $resp;
+} else if ($_POST['op'] == 'getTodosAlunos') {
+
+    $resp = $lanc->getTodosAlunos();
     echo $resp;
 }

@@ -53,7 +53,7 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
                 <p>Endereço: <span id="endColab"></span></p>
             </div>
             <div class="dropdown mt-3 text-center mt-5">
-                <button class="btn btn-warning">editar dados</button>
+                <button class="btn btn-warning" onclick="editarDados()">editar dados</button>
             </div>
         </div>
     </div>
