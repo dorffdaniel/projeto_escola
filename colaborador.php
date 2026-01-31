@@ -93,6 +93,89 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
 
 
 
+<div class="modal" tabindex="-1" id="modalEditarAluno">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Aluno</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Turma: <span id="nomeTurma" class="mb-4 text-primary fw-bold"></span></p>
+                <div class="row">
+                    <div class="card shadow-sm p-4">
+                        <h6 class="mb-4 text-primary fw-bold">Dados pessoais</h6>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="nomAlunEdit" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="nomAlunEdit" placeholder="Digite o nome">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="telAlunEdit" class="form-label">Telefone</label>
+                                <input type="text" class="form-control" id="telAlunEdit" placeholder="(00) 00000-0000">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="dtNascAlunEdit" class="form-label">Data de nascimento</label>
+                                <input type="date" class="form-control" id="dtNascAlunEdit">
+                            </div>
+
+                            <div class="col-md-8">
+                                <label for="endAlunEdit" class="form-label">Endereço</label>
+                                <input type="text" class="form-control" id="endAlunEdit"
+                                    placeholder="Rua, número, bairro">
+                            </div>
+                        </div>
+
+
+                        <button type="button" class="btn btn-primary mt-3" onclick="salvarEditAluno()">Salvar </button>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="card shadow-sm p-4">
+                        <h5 class="mb-4 text-primary fw-bold">Notas</h5>
+
+                        <div class="row p-2">
+                            <div class="col-md-6">
+                                <label for="" class="form-label">1º Bimestre</label>
+                                <input type="text" class="form-control" id="not1Edit">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="" class="form-label">2º Bimestre</label>
+                                <input type="text" class="form-control" id="not2Edit">
+                            </div>
+                        </div>
+
+
+                        <div class="row p-2">
+
+                            <div class="col-md-6">
+                                <label for="" class="form-label">3º Bimestre</label>
+                                <input type="text" class="form-control" id="not3Edit">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="" class="form-label">4º Bimestre</label>
+                                <input type="text" class="form-control" id="not4Edit">
+                            </div>
+                        </div>
+
+
+                        <button type="button" class="btn btn-primary mt-3" onclick="salvarEditAluno()">Salvar </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 
 <?php

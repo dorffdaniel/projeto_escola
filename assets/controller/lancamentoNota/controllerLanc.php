@@ -25,4 +25,8 @@ if ($_POST['op'] == 'getTurma') {
 
     $resp = $lanc->getTodosAlunos();
     echo $resp;
+} else if ($_POST['op'] == 'editarAluno') {
+    $resp = $lanc->editarAluno($_POST['idAlun']);
+
+    echo $resp;
 }

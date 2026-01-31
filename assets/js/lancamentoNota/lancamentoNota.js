@@ -71,15 +71,15 @@ function getAlunosPorTurma() {
 
             let mens = `<tr>`;
             if (msg.length > 0) {
-                msg.forEach(el => {
+                msg.forEach((el, index) => {
                     mens += `<td class="text-center"> ${el.nome} </td>`
-                    mens += `<td class="text-center">${el.nota_b1 || ''} </td>`
-                    mens += `<td class="text-center">${el.nota_b2 || ''}</td>`
-                    mens += `<td class="text-center">${el.nota_b3 || ''}</td>`
-                    mens += `<td class="text-center">${el.nota_b4 || ''}</td>`
-                    mens += `<td class="text-center"></td>`
+                    mens += `<td class="text-center">${el.nota_b1 || '--'} </td>`
+                    mens += `<td class="text-center">${el.nota_b2 || '--'}</td>`
+                    mens += `<td class="text-center">${el.nota_b3 || '--'}</td>`
+                    mens += `<td class="text-center">${el.nota_b4 || '--'}</td>`
+                    mens += `<td class="text-center">${el.nota_final}</td>`
                     mens += `<td class="text-center"> 
-                <button class="btn btn-warning">editar</button>
+                <button class="btn btn-warning" onclick="editarAluno(${el.idAlun})">editar</button>
                 <button class="btn btn-success">info</button>
                 <button class="btn btn-danger">apgar</button>
                 </td>`
@@ -144,15 +144,15 @@ function getTodosAlunos() {
 
             let mens = `<tr>`;
             if (resp.length > 0) {
-                resp.forEach(el => {
+                resp.forEach((el, index) => {
                     mens += `<td class="text-center"> ${el.nome} </td>`
-                    mens += `<td class="text-center">${el.nota_b1 || ''}</td>`
-                    mens += `<td class="text-center">${el.nota_b2 || ''}</td>`
-                    mens += `<td class="text-center">${el.nota_b3 || ''}</td>`
-                    mens += `<td class="text-center">${el.nota_b4 || ''}</td>`
-                    mens += `<td class="text-center"></td>`
+                    mens += `<td class="text-center">${el.nota_b1 || '--'}</td>`
+                    mens += `<td class="text-center">${el.nota_b2 || '--'}</td>`
+                    mens += `<td class="text-center">${el.nota_b3 || '--'}</td>`
+                    mens += `<td class="text-center">${el.nota_b4 || '--'}</td>`
+                    mens += `<td class="text-center"> ${el.nota_final}</td>`
                     mens += `<td class="text-center"> 
-                <button class="btn btn-warning">editar</button>
+                <button class="btn btn-warning" onclick="editarAluno(${el.idAlun})">editar</button>
                 <button class="btn btn-success">info</button>
                 <button class="btn btn-danger">apgar</button>
                 </td>`
@@ -184,6 +184,55 @@ function getTodosAlunos() {
             console.log(textStatus)
         })
 }
+
+
+function editarAluno(idAlun) {
+
+    console.log(idAlun)
+
+    let dados = new FormData();
+    dados.append('op', 'editarAluno')
+    dados.append('idAlun', idAlun);
+
+    $.ajax({
+        url: 'assets/controller/lancamentoNota/controllerLanc.php',
+        method: 'POST',
+        data: dados,
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false
+    })
+
+        .done(function (resp) {
+
+            console.log(resp)
+
+            $("#nomeTurma").html(resp.nomeTurma);
+
+            $("#nomAlunEdit").val(resp.nome);
+            $("#telAlunEdit").val(resp.telefone);
+            $("#dtNascAlunEdit").val(resp.dataNasci);
+            $("#endAlunEdit").val(resp.endereco);
+
+            // notas
+            $("#not1Edit").val(resp.nota_b1 || '--');
+            $("#not2Edit").val(resp.nota_b2 || '--');
+            $("#not3Edit").val(resp.nota_b3 || '--');
+            $("#not4Edit").val(resp.nota_b4 || '--');
+
+
+            $("#modalEditarAluno").modal("show");
+
+        })
+
+        .fail(function (textStatus) {
+            console.log(textStatus)
+        })
+
+}
+
+
 
 
 

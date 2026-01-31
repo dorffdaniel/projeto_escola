@@ -41,7 +41,14 @@ class LancamentoNota
         MAX(CASE WHEN p.id = 1 THEN av.nota END) AS nota_b1,
         MAX(CASE WHEN p.id = 2 THEN av.nota END) AS nota_b2,
         MAX(CASE WHEN p.id = 3 THEN av.nota END) AS nota_b3,
-        MAX(CASE WHEN p.id = 4 THEN av.nota END) AS nota_b4
+        MAX(CASE WHEN p.id = 4 THEN av.nota END) AS nota_b4,
+
+        ROUND( 
+        (COALESCE(MAX(CASE WHEN p.id = 1 THEN av.nota END),0) +
+            COALESCE(MAX(CASE WHEN p.id = 2 THEN av.nota END),0) +
+            COALESCE(MAX(CASE WHEN p.id = 3 THEN av.nota END),0) +
+            COALESCE(MAX(CASE WHEN p.id = 4 THEN av.nota END),0))/ 4 
+            , 2) as nota_final
         FROM alunos a
         JOIN turma t ON a.turma_id = t.idTurm
         LEFT JOIN avaliacoes av ON a.idAlun = av.aluno_id
@@ -74,11 +81,18 @@ class LancamentoNota
     {
         global $conn;
 
-        $stmt = $conn->prepare("SELECT a.nome,
+        $stmt = $conn->prepare("SELECT a.idAlun, a.nome,
         MAX(CASE WHEN p.id = 1 THEN av.nota END) AS nota_b1,
         MAX(CASE WHEN p.id = 2 THEN av.nota END) AS nota_b2,
         MAX(CASE WHEN p.id = 3 THEN av.nota END) AS nota_b3,
-        MAX(CASE WHEN p.id = 4 THEN av.nota END) AS nota_b4
+        MAX(CASE WHEN p.id = 4 THEN av.nota END) AS nota_b4,
+        
+      ROUND( 
+       (COALESCE(MAX(CASE WHEN p.id = 1 THEN av.nota END),0) +
+        COALESCE(MAX(CASE WHEN p.id = 2 THEN av.nota END),0) +
+        COALESCE(MAX(CASE WHEN p.id = 3 THEN av.nota END),0) +
+        COALESCE(MAX(CASE WHEN p.id = 4 THEN av.nota END),0))/ 4 
+        , 2) as nota_final
         FROM alunos as a 
         join turma as t on a.turma_id = t.idTurm
         left join avaliacoes as av on a.idAlun = av.aluno_id
@@ -98,5 +112,42 @@ class LancamentoNota
         $conn->close();
         $stmt->close();
         return json_encode($dados);
+    }
+
+
+    function editarAluno($idAlun)
+    {
+        global $conn;
+
+        $stmt = $conn->prepare("SELECT a.idAlun, a.nome, a.dataNasci, a.telefone, a.endereco, t.nome as nomeTurma,
+        MAX(CASE WHEN p.id = 1 THEN av.nota END) AS nota_b1,
+        MAX(CASE WHEN p.id = 2 THEN av.nota END) AS nota_b2,
+        MAX(CASE WHEN p.id = 3 THEN av.nota END) AS nota_b3,
+        MAX(CASE WHEN p.id = 4 THEN av.nota END) AS nota_b4  
+        FROM alunos as a 
+        join turma as t on a.turma_id = t.idTurm
+        left join avaliacoes as av on a.idAlun = av.aluno_id
+        left join periodo p ON av.periodo_id = p.id
+        where a.idAlun = ?
+        GROUP BY 
+        a.idAlun,
+        a.nome,
+        a.dataNasci,
+        a.telefone,
+        a.endereco,
+        t.nome");
+
+        $stmt->bind_param("i", $idAlun);
+        $stmt->execute();
+
+        $res = $stmt->get_result();
+        if ($res->num_rows > 0) {
+            $row = $res->fetch_assoc();
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return json_encode($row);
     }
 }
