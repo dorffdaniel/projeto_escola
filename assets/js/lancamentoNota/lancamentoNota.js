@@ -188,7 +188,7 @@ function getTodosAlunos() {
 
 function editarAluno(idAlun) {
 
-    console.log(idAlun)
+    console.log("valor: " + idAlun)
 
     let dados = new FormData();
     dados.append('op', 'editarAluno')
@@ -209,6 +209,8 @@ function editarAluno(idAlun) {
             console.log(resp)
 
             $("#nomeTurma").html(resp.nomeTurma);
+
+            $("#idEdit").val(resp.idAlun);
 
             $("#nomAlunEdit").val(resp.nome);
             $("#telAlunEdit").val(resp.telefone);
@@ -231,6 +233,46 @@ function editarAluno(idAlun) {
         })
 
 }
+
+
+
+function salvarEditPessoalAluno() {
+
+    let dados = new FormData();
+    dados.append('op', 'salvarEditPessoalAluno');
+    dados.append('idAlun', $("#idEdit").val());
+    dados.append('nomeEdit', $("#nomAlunEdit").val());
+    dados.append('telEdit', $("#telAlunEdit").val());
+    dados.append('dtNascEdit', $("#dtNascAlunEdit").val());
+    dados.append('endEdit', $("#endAlunEdit").val());
+
+    $.ajax({
+        url: 'assets/controller/lancamentoNota/controllerLanc.php',
+        method: 'Post',
+        data: dados,
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false
+    })
+
+        .done(function (resp) {
+
+            if (resp.msg) {
+                alerta("success", resp.msg);
+                getTodosAlunos();
+            } else {
+                console.log(resp.erro);
+            }
+
+        })
+
+        .fail(function (textStatus) {
+            console.log(textStatus);
+        })
+
+}
+
 
 
 

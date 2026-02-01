@@ -106,6 +106,8 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
                     <div class="card shadow-sm p-4">
                         <h6 class="mb-4 text-primary fw-bold">Dados pessoais</h6>
 
+                        <input type="hidden" name="" id="idEdit">
+
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="nomAlunEdit" class="form-label">Nome</label>

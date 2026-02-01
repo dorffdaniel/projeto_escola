@@ -37,7 +37,7 @@ class LancamentoNota
     {
         global $conn;
 
-        $stmt = $conn->prepare("SELECT a.nome,
+        $stmt = $conn->prepare("SELECT a.idAlun, a.nome,
         MAX(CASE WHEN p.id = 1 THEN av.nota END) AS nota_b1,
         MAX(CASE WHEN p.id = 2 THEN av.nota END) AS nota_b2,
         MAX(CASE WHEN p.id = 3 THEN av.nota END) AS nota_b3,
@@ -149,5 +149,29 @@ class LancamentoNota
         $conn->close();
 
         return json_encode($row);
+    }
+
+
+    function salvarEditPessoalAluno($idAlun, $nome, $tel, $dtNasc, $end)
+    {
+        global $conn;
+
+        $stmt = $conn->prepare("UPDATE alunos
+        SET nome= ?, dataNasci= ?, telefone= ?, endereco=?
+        WHERE idAlun= ?");
+
+        $stmt->bind_param("ssssi", $nome, $dtNasc, $tel, $end, $idAlun);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            $arr = json_encode(["msg" => "Editado com sucesso"]);
+        } else {
+            $arr = json_encode(["erro" => "erro ao editar" . $conn->error]);
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $arr;
     }
 }

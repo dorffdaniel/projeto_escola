@@ -29,4 +29,15 @@ if ($_POST['op'] == 'getTurma') {
     $resp = $lanc->editarAluno($_POST['idAlun']);
 
     echo $resp;
+} else if ($_POST['op'] == 'salvarEditPessoalAluno') {
+
+    $idAlun = $_POST['idAlun'];
+    $nome = $_POST['nomeEdit'];
+    $tel = $_POST['telEdit'];
+    $dtNasc = $_POST['dtNascEdit'];
+    $end = $_POST['endEdit'];
+
+
+    $resp = $lanc->salvarEditPessoalAluno($idAlun, $nome, $tel, $dtNasc, $end);
+    echo $resp;
 }
