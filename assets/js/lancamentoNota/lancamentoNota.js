@@ -73,10 +73,10 @@ function getAlunosPorTurma() {
             if (msg.length > 0) {
                 msg.forEach((el, index) => {
                     mens += `<td class="text-center"> ${el.nome} </td>`
-                    mens += `<td class="text-center">${el.nota_b1 || '--'} </td>`
-                    mens += `<td class="text-center">${el.nota_b2 || '--'}</td>`
-                    mens += `<td class="text-center">${el.nota_b3 || '--'}</td>`
-                    mens += `<td class="text-center">${el.nota_b4 || '--'}</td>`
+                    mens += `<td class="text-center">${el.nota_b1 || ''} </td>`
+                    mens += `<td class="text-center">${el.nota_b2 || ''}</td>`
+                    mens += `<td class="text-center">${el.nota_b3 || ''}</td>`
+                    mens += `<td class="text-center">${el.nota_b4 || ''}</td>`
                     mens += `<td class="text-center">${el.nota_final}</td>`
                     mens += `<td class="text-center"> 
                 <button class="btn btn-warning" onclick="editarAluno(${el.idAlun})">editar</button>
@@ -146,10 +146,10 @@ function getTodosAlunos() {
             if (resp.length > 0) {
                 resp.forEach((el, index) => {
                     mens += `<td class="text-center"> ${el.nome} </td>`
-                    mens += `<td class="text-center">${el.nota_b1 || '--'}</td>`
-                    mens += `<td class="text-center">${el.nota_b2 || '--'}</td>`
-                    mens += `<td class="text-center">${el.nota_b3 || '--'}</td>`
-                    mens += `<td class="text-center">${el.nota_b4 || '--'}</td>`
+                    mens += `<td class="text-center">${el.nota_b1 || ''}</td>`
+                    mens += `<td class="text-center">${el.nota_b2 || ''}</td>`
+                    mens += `<td class="text-center">${el.nota_b3 || ''}</td>`
+                    mens += `<td class="text-center">${el.nota_b4 || ''}</td>`
                     mens += `<td class="text-center"> ${el.nota_final}</td>`
                     mens += `<td class="text-center"> 
                 <button class="btn btn-warning" onclick="editarAluno(${el.idAlun})">editar</button>
@@ -206,8 +206,6 @@ function editarAluno(idAlun) {
 
         .done(function (resp) {
 
-            console.log(resp)
-
             $("#nomeTurma").html(resp.nomeTurma);
 
             $("#idEdit").val(resp.idAlun);
@@ -218,10 +216,10 @@ function editarAluno(idAlun) {
             $("#endAlunEdit").val(resp.endereco);
 
             // notas
-            $("#not1Edit").val(resp.nota_b1 || '--');
-            $("#not2Edit").val(resp.nota_b2 || '--');
-            $("#not3Edit").val(resp.nota_b3 || '--');
-            $("#not4Edit").val(resp.nota_b4 || '--');
+            $("#not1Edit").val(resp.nota_b1 || '');
+            $("#not2Edit").val(resp.nota_b2 || '');
+            $("#not3Edit").val(resp.nota_b3 || '');
+            $("#not4Edit").val(resp.nota_b4 || '');
 
 
             $("#modalEditarAluno").modal("show");
@@ -233,7 +231,6 @@ function editarAluno(idAlun) {
         })
 
 }
-
 
 
 function salvarEditPessoalAluno() {
@@ -274,11 +271,125 @@ function salvarEditPessoalAluno() {
 }
 
 
+function getPerido() {
+    let dados = new FormData();
+    dados.append('op', 'getPeriodo');
 
+    $.ajax({
+        url: 'assets/controller/lancamentoNota/controllerLanc.php',
+        method: 'Post',
+        data: dados,
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false
+    })
+
+        .done(function (resp) {
+
+            let op = `<option value='-1'>selecione um periodo</option>`
+            resp.forEach(el => {
+                op += `<option value='${el.id}'> ${el.descricao}</option>`
+            })
+
+            $("#periodoNotas").html(op);
+        })
+
+        .fail(function (textStatus) {
+            console.log(textStatus)
+        })
+
+
+}
+
+
+function getPeriodoAdcNota() {
+    let dados = new FormData();
+    dados.append('op', 'getPeriodoAdcNota');
+
+    $.ajax({
+        url: 'assets/controller/lancamentoNota/controllerLanc.php',
+        method: 'Post',
+        data: dados,
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false
+    })
+
+        .done(function (resp) {
+
+            let op = `<option value='-1'>selecione um periodo</option>`
+            resp.forEach(el => {
+                op += `<option value='${el.id}'> ${el.descricao}</option>`
+            })
+
+            $("#periodoNotas2").html(op);
+        })
+
+        .fail(function (textStatus) {
+            console.log(textStatus)
+        })
+}
+
+
+
+
+
+function salvarEditNotas() {
+    let dados = new FormData();
+    let periodo = $("#periodoNotas").val();
+    let nota = $('#notaEdit').val();
+
+    if (periodo == '-1') {
+        alerta("error", "selecione um periodo");
+        return;
+    }
+
+    if (nota < 0) {
+        alerta("warning", "nota nao pode ser negativa");
+        return;
+    }
+
+
+    dados.append('op', 'salvarEditNotas');
+    dados.append('idAlun', $("#idEdit").val());
+    dados.append('notaEdit', nota)
+    dados.append('periodo', periodo)
+
+    $.ajax({
+        url: 'assets/controller/lancamentoNota/controllerLanc.php',
+        method: 'Post',
+        data: dados,
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false
+    })
+
+        .done(function (resp) {
+
+            if (resp.msg) {
+                alerta("success", resp.msg);
+                getTodosAlunos();
+                getPerido();
+            } else {
+                console.log(resp.erro);
+            }
+
+        })
+
+        .fail(function (textStatus) {
+            console.log(textStatus)
+        })
+
+}
 
 
 
 $(() => {
     getTurmas();
     getTodosAlunos();
+    getPerido();
+    getPeriodoAdcNota()
 })

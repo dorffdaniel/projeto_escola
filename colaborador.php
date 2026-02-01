@@ -22,11 +22,13 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item m-2">
+                        <a class="btn btn-primary" href="colaborador.php">Lançar notas</a>
+                    </li>
+
+                    <li class="nav-item m-2">
                         <a class="btn btn-primary" aria-current="page" href="#">Cadastrar alunos</a>
                     </li>
-                    <li class="nav-item m-2">
-                        <a class="btn btn-primary" href="#">Lançar notas</a>
-                    </li>
+
                 </ul>
 
                 <button type="submit" class="btn btn-outline-danger" onclick="logout()">Sair</button>
@@ -37,7 +39,7 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
 
 </header>
 
-<main>
+<main id="mainColaborador">
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Dados do Perfil</h5>
@@ -58,7 +60,6 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
         </div>
     </div>
 
-
     <h2 class="text-center mt-2">LANÇAMENTO DE NOTAS </h2>
     <h4 class="text-center">Escola Tech</h4>
 
@@ -74,13 +75,13 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
             <table class="table table-striped" id="tabelaDEfuncAtivos">
                 <thead>
                     <tr>
-                        <th>nome</th>
-                        <th>Primeiro B</th>
-                        <th>Segundo B</th>
-                        <th>Terceiro B</th>
-                        <th>Quarto B</th>
-                        <th>Nota Final</th>
-                        <th>Ações</th>
+                        <th class="text-center">nome</th>
+                        <th class="text-center">Primeiro B</th>
+                        <th class="text-center">Segundo B</th>
+                        <th class="text-center">Terceiro B</th>
+                        <th class="text-center">Quarto B</th>
+                        <th class="text-center">Nota Final</th>
+                        <th class="text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody id="resTabelaAluno"></tbody>
@@ -90,7 +91,6 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
     </section>
 
 </main>
-
 
 
 <div class="modal" tabindex="-1" id="modalEditarAluno">
@@ -132,50 +132,62 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
                         </div>
 
 
-                        <button type="button" class="btn btn-primary mt-3" onclick="salvarEditAluno()">Salvar </button>
+                        <button type="button" class="btn btn-primary mt-3" onclick="salvarEditPessoalAluno()">Salvar
+                            dados pessoais</button>
 
                     </div>
 
                 </div>
-                <div class="row">
+                <div class="row mt-2">
                     <div class="card shadow-sm p-4">
                         <h5 class="mb-4 text-primary fw-bold">Notas</h5>
 
-                        <div class="row p-2">
+                        <div class="row">
+                            <!-- BLOCO 1 -->
                             <div class="col-md-6">
-                                <label for="" class="form-label">1º Bimestre</label>
-                                <input type="text" class="form-control" id="not1Edit">
+                                <div class="mb-3">
+                                    <label class="form-label">Período</label>
+                                    <select class="form-select form-select-sm w-50" id="periodoNotas">
+
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Editar uma nota</label>
+                                    <input type="number" class="form-control w-50" id="notaEdit1" min="0">
+                                </div>
+
+                                <button class="btn btn-primary btn-sm" onclick="salvarEditNotas()">
+                                    Editar nota
+                                </button>
                             </div>
 
+                            <!-- BLOCO 2 -->
                             <div class="col-md-6">
-                                <label for="" class="form-label">2º Bimestre</label>
-                                <input type="text" class="form-control" id="not2Edit">
+                                <div class="mb-3">
+                                    <label class="form-label">Período</label>
+                                    <select class="form-select form-select-sm w-50" id="periodoNotas2">
+
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Adicione uma nota</label>
+                                    <input type="number" class="form-control w-50" id="notaEdit2" min="0">
+                                </div>
+
+                                <button class="btn btn-success btn-sm" onclick="adicionarNota()">
+                                    Salvar nota
+                                </button>
                             </div>
                         </div>
-
-
-                        <div class="row p-2">
-
-                            <div class="col-md-6">
-                                <label for="" class="form-label">3º Bimestre</label>
-                                <input type="text" class="form-control" id="not3Edit">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="" class="form-label">4º Bimestre</label>
-                                <input type="text" class="form-control" id="not4Edit">
-                            </div>
-                        </div>
-
-
-                        <button type="button" class="btn btn-primary mt-3" onclick="salvarEditAluno()">Salvar </button>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
-
 
 
 
@@ -185,6 +197,7 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
 include_once __DIR__ . '/../projetoescola/assets/pages/footer.php';
 
 ?>
+
 <script src="assets/js/datatable.js"></script>
 <script src="assets/js/colaborador.js"></script>
 <script src="assets/js/lancamentoNota/lancamentoNota.js"></script>

@@ -174,4 +174,75 @@ class LancamentoNota
 
         return $arr;
     }
+
+
+    function getPeriodo()
+    {
+        global $conn;
+
+        $stmt = $conn->prepare("SELECT p.id, p.descricao 
+        FROM periodo as p
+        join avaliacoes as av on p.id = av.periodo_id
+        group by p.id");
+
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        while ($row = $res->fetch_assoc()) {
+            $dados[] = $row;
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return json_encode($dados);
+    }
+
+
+    function salvarEditNotas($idColab, $idAlun, $nota, $periodo)
+    {
+        global $conn;
+
+        $stmt = $conn->prepare("UPDATE avaliacoes
+        SET nota = ?
+        WHERE aluno_id = ?
+        AND colab_id = ?
+        AND periodo_id = ?;");
+
+        $stmt->bind_param("diii", $nota, $idAlun, $idColab, $periodo);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            $arr = json_encode(["msg" => "Nota editada com sucesso"]);
+        } else {
+            $arr = json_encode(["erro" => "Erro: " . $conn->error]);
+        }
+
+        $stmt->close();
+        $conn->close();
+        return $arr;
+    }
+
+    function getPeriodoAdcNota()
+    {
+        global $conn;
+
+        $stmt = $conn->prepare("SELECT p.id, p.descricao
+        FROM periodo AS p
+        LEFT JOIN avaliacoes AS av ON p.id = av.periodo_id
+        WHERE av.periodo_id IS NULL;");
+
+        $stmt->execute();
+
+        $res = $stmt->get_result();
+
+        while ($row = $res->fetch_assoc()) {
+            $dados[] = $row;
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return json_encode($dados);
+    }
 }
