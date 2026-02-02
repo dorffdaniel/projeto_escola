@@ -176,15 +176,18 @@ class LancamentoNota
     }
 
 
-    function getPeriodo()
+    function getPeriodo($idAlun)
     {
         global $conn;
 
-        $stmt = $conn->prepare("SELECT p.id, p.descricao 
-        FROM periodo as p
-        join avaliacoes as av on p.id = av.periodo_id
-        group by p.id");
+        $stmt = $conn->prepare("SELECT p.id, p.descricao
+        FROM periodo  as p
+        LEFT JOIN avaliacoes as av
+        ON p.id = av.periodo_id
+        AND av.aluno_id = ?
+        WHERE av.id IS not NULL");
 
+        $stmt->bind_param("i", $idAlun);
         $stmt->execute();
         $res = $stmt->get_result();
 
@@ -223,14 +226,18 @@ class LancamentoNota
         return $arr;
     }
 
-    function getPeriodoAdcNota()
+    function getPeriodoAdcNota($idAlun)
     {
         global $conn;
 
         $stmt = $conn->prepare("SELECT p.id, p.descricao
-        FROM periodo AS p
-        LEFT JOIN avaliacoes AS av ON p.id = av.periodo_id
-        WHERE av.periodo_id IS NULL;");
+        FROM periodo  as p
+        LEFT JOIN avaliacoes as av
+        ON p.id = av.periodo_id
+        AND av.aluno_id = ?
+        WHERE av.id IS NULL");
+
+        $stmt->bind_param("i", $idAlun);
 
         $stmt->execute();
 
@@ -244,5 +251,26 @@ class LancamentoNota
         $conn->close();
 
         return json_encode($dados);
+    }
+
+    function adicionarNota($idColab, $idAlun, $nota, $periodo)
+    {
+        global $conn;
+
+        $stmt = $conn->prepare("INSERT INTO avaliacoes(nota, colab_id, aluno_id, periodo_id) values(?, ?, ?, ?)");
+
+        $stmt->bind_param("diii", $nota, $idColab, $idAlun, $periodo);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            $arr = json_encode(["msg" => "Nota adicionada com sucesso"]);
+        } else {
+            $arr = json_encode(["erro" => "erro ao adicionar nota"]);
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $arr;
     }
 }

@@ -45,8 +45,9 @@ if ($_POST['op'] == 'getTurma') {
     $resp = $lanc->salvarEditPessoalAluno($idAlun, $nome, $tel, $dtNasc, $end);
     echo $resp;
 } else if ($_POST['op'] == 'getPeriodo') {
-    $resp = $lanc->getPeriodo();
+    $idAlun = $_POST['idAlun'];
 
+    $resp = $lanc->getPeriodo($idAlun);
     echo $resp;
 } else if ($_POST['op'] == 'salvarEditNotas') {
 
@@ -54,11 +55,19 @@ if ($_POST['op'] == 'getTurma') {
     $periodo = $_POST['periodo'];
     $nota =  isset($_POST['notaEdit']) ? (float) $_POST['notaEdit'] : 0.0;
 
-
     $resp = $lanc->salvarEditNotas($idColab, $idAlun, $nota, $periodo);
     echo $resp;
 } else if ($_POST['op'] == 'getPeriodoAdcNota') {
+    $idAlun = $_POST['idAlun'];
 
-    $resp = $lanc->getPeriodoAdcNota();
+    $resp = $lanc->getPeriodoAdcNota($idAlun);
+    echo $resp;
+} else if ($_POST['op'] == 'adicionarNota') {
+
+    $idAlun = $_POST['idAlun'];
+    $periodo = $_POST['periodo'];
+    $nota =  isset($_POST['nota']) ? (float) $_POST['nota'] : 0.0;
+
+    $resp = $lanc->adicionarNota($idColab, $idAlun, $nota, $periodo);
     echo $resp;
 }

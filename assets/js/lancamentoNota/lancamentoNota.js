@@ -18,8 +18,6 @@ function getTurmas() {
 
             let op = '<option value="-1">selecione uma turma </option>';
 
-            console.log(resp)
-
             resp.msg.forEach((el, index) => {
                 op += `<option value='${el.idTurm}'> ${el.nome} - ${el.ano}  </option>`
 
@@ -79,8 +77,7 @@ function getAlunosPorTurma() {
                     mens += `<td class="text-center">${el.nota_b4 || ''}</td>`
                     mens += `<td class="text-center">${el.nota_final}</td>`
                     mens += `<td class="text-center"> 
-                <button class="btn btn-warning" onclick="editarAluno(${el.idAlun})">editar</button>
-                <button class="btn btn-success">info</button>
+                <button class="btn btn-warning" onclick="editarAluno(${el.idAlun})">editar / lançar notas</button>
                 <button class="btn btn-danger">apgar</button>
                 </td>`
                     mens += `</tr>`;
@@ -152,8 +149,7 @@ function getTodosAlunos() {
                     mens += `<td class="text-center">${el.nota_b4 || ''}</td>`
                     mens += `<td class="text-center"> ${el.nota_final}</td>`
                     mens += `<td class="text-center"> 
-                <button class="btn btn-warning" onclick="editarAluno(${el.idAlun})">editar</button>
-                <button class="btn btn-success">info</button>
+                <button class="btn btn-warning" onclick="editarAluno(${el.idAlun})">editar / lançar notas</button>
                 <button class="btn btn-danger">apgar</button>
                 </td>`
                     mens += `</tr>`;
@@ -188,11 +184,12 @@ function getTodosAlunos() {
 
 function editarAluno(idAlun) {
 
-    console.log("valor: " + idAlun)
-
     let dados = new FormData();
     dados.append('op', 'editarAluno')
     dados.append('idAlun', idAlun);
+
+    getPerido(idAlun);
+    getPeriodoAdcNota(idAlun);
 
     $.ajax({
         url: 'assets/controller/lancamentoNota/controllerLanc.php',
@@ -271,9 +268,12 @@ function salvarEditPessoalAluno() {
 }
 
 
-function getPerido() {
+function getPerido(idAlun) {
     let dados = new FormData();
     dados.append('op', 'getPeriodo');
+    dados.append('idAlun', idAlun);
+
+    console.log("get perido: " + idAlun);
 
     $.ajax({
         url: 'assets/controller/lancamentoNota/controllerLanc.php',
@@ -303,9 +303,66 @@ function getPerido() {
 }
 
 
-function getPeriodoAdcNota() {
+function salvarEditNotas() {
+    let dados = new FormData();
+    let periodo = $("#periodoNotas").val();
+    let nota = $('#notaEdit1').val();
+
+    if (periodo == '-1') {
+        alerta("error", "selecione um periodo");
+        return;
+    }
+
+    if (nota < 0 || nota > 10) {
+        alerta("warning", "adicona uma nota entre 0 a 10");
+        return;
+    }
+
+
+    dados.append('op', 'salvarEditNotas');
+    dados.append('idAlun', $("#idEdit").val());
+    dados.append('notaEdit', nota)
+    dados.append('periodo', periodo)
+
+    console.log("perido " + periodo)
+    console.log("nota: " + nota)
+
+
+    $.ajax({
+        url: 'assets/controller/lancamentoNota/controllerLanc.php',
+        method: 'Post',
+        data: dados,
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false
+    })
+
+        .done(function (resp) {
+
+            if (resp.msg) {
+                alerta("success", resp.msg);
+                getTodosAlunos();
+                $('#notaEdit1').val("")
+                $("#modalEditarAluno").modal("hide");
+            } else {
+                console.log(resp.erro);
+            }
+
+        })
+
+        .fail(function (textStatus) {
+            console.log(textStatus)
+        })
+
+}
+
+
+
+function getPeriodoAdcNota(idAlun) {
     let dados = new FormData();
     dados.append('op', 'getPeriodoAdcNota');
+    dados.append('idAlun', idAlun);
 
     $.ajax({
         url: 'assets/controller/lancamentoNota/controllerLanc.php',
@@ -333,29 +390,26 @@ function getPeriodoAdcNota() {
 }
 
 
-
-
-
-function salvarEditNotas() {
+function adicionarNota() {
     let dados = new FormData();
-    let periodo = $("#periodoNotas").val();
-    let nota = $('#notaEdit').val();
+    let idAlun = $("#idEdit").val();
+    let periodo = $("#periodoNotas2").val();
+    let nota = $("#notaEdit2").val();
 
     if (periodo == '-1') {
-        alerta("error", "selecione um periodo");
+        alerta("warning", "selecione um periodo");
         return;
     }
 
-    if (nota < 0) {
-        alerta("warning", "nota nao pode ser negativa");
+    if (nota < 0 || nota > 10) {
+        alerta("warning", "adicona uma nota entre 0 a 10");
         return;
     }
 
-
-    dados.append('op', 'salvarEditNotas');
-    dados.append('idAlun', $("#idEdit").val());
-    dados.append('notaEdit', nota)
-    dados.append('periodo', periodo)
+    dados.append('op', 'adicionarNota');
+    dados.append('idAlun', idAlun);
+    dados.append('periodo', periodo);
+    dados.append('nota', nota);
 
     $.ajax({
         url: 'assets/controller/lancamentoNota/controllerLanc.php',
@@ -368,11 +422,13 @@ function salvarEditNotas() {
     })
 
         .done(function (resp) {
+            console.log(resp);
 
             if (resp.msg) {
                 alerta("success", resp.msg);
                 getTodosAlunos();
-                getPerido();
+                $("#notaEdit2").val("");
+                $("#modalEditarAluno").modal("hide");
             } else {
                 console.log(resp.erro);
             }
@@ -380,16 +436,15 @@ function salvarEditNotas() {
         })
 
         .fail(function (textStatus) {
-            console.log(textStatus)
+            console.log(textStatus);
         })
 
 }
 
 
 
+
 $(() => {
     getTurmas();
     getTodosAlunos();
-    getPerido();
-    getPeriodoAdcNota()
 })
