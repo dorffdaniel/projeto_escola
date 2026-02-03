@@ -27,34 +27,29 @@ class Colaborador
 
         $stmt->close();
         $conn->close();
-
         return json_encode($row);
     }
 
-    function getTurmas()
-    {
 
+    function salvarDadosPessoais($id, $nome, $cpf, $dtNasc, $email, $tel, $end)
+    {
         global $conn;
 
-        $stmt = $conn->prepare("SELECT * FROM turma");
+        $stmt = $conn->prepare("UPDATE colaboradores 
+        SET nome = ?, cpf = ?, dataNasc = ?, email = ?, telefone = ?, endereco = ?
+        WHERE id = ?");
+
+        $stmt->bind_param("ssssssi", $nome, $cpf, $dtNasc, $email, $tel, $end, $id);
         $stmt->execute();
 
-        $res = $stmt->get_result();
-
-        if ($res->num_rows == 0) {
-            return json_encode(["erro" => "nenhuma turma encontrada"]);
+        if ($stmt->affected_rows > 0) {
+            $arr = json_encode(["msg" => "Editado com sucesso"]);
+        } else {
+            $arr = json_encode(["erro" => "Erro ao editar"]);
         }
-
-        $arr = [];
-
-        while ($row = $res->fetch_assoc()) {
-            $arr[] = $row;
-        }
-
 
         $stmt->close();
         $conn->close();
-
-        return json_encode(["msg" => $arr]);
+        return $arr;
     }
 }

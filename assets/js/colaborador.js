@@ -27,6 +27,16 @@ function getColaborador() {
             $("#emailColab").html(resp.email);
             $("#telColab").html(resp.telefone);
             $("#endColab").html(resp.endereco);
+
+
+            // modal edit
+            $("#nomColabEdit").val(resp.nome);
+            $("#cpfColabEdit").val(resp.cpf);
+            $("#dtNasColabEdit").val(resp.dataNasc);
+            $("#emailColabEdit").val(resp.email);
+            $("#telColabEdit").val(resp.telefone);
+            $("#endColabEdit").val(resp.endereco);
+
         })
 
         .fail(function (textStatus) {
@@ -35,6 +45,61 @@ function getColaborador() {
 
 }
 
+
+function editarDados() {
+    $("#modalEditColab").modal("show");
+}
+
+
+function salvarDadosPessoais() {
+    let dados = new FormData();
+    let nome = $("#nomColabEdit").val();
+    let cpf = $("#cpfColabEdit").val();
+    let dtNasc = $("#dtNasColabEdit").val();
+    let email = $("#emailColabEdit").val();
+    let tel = $("#telColabEdit").val();
+    let endEdit = $("#endColabEdit").val();
+
+    if (!nome || !email) {
+        alerta("error", "campo em falta");
+        return;
+    }
+
+    dados.append('op', 'salvarDadosPessoais');
+    dados.append('nome', nome);
+    dados.append('cpf', cpf);
+    dados.append('dtNasc', dtNasc);
+    dados.append('email', email);
+    dados.append('tel', tel);
+    dados.append('endEdit', endEdit);
+
+
+    $.ajax({
+        url: 'assets/controller/colaborador/controllerColab.php',
+        method: 'Post',
+        data: dados,
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false
+    })
+
+        .done(function (resp) {
+            console.log(resp)
+
+            if (resp.msg) {
+                alerta("success", resp.msg);
+                getColaborador();
+                $("#modalEditColab").modal("hide");
+            }
+
+        })
+
+        .fail(function (textStatus) {
+            console.log(textStatus)
+        })
+
+}
 
 
 

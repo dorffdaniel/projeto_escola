@@ -93,6 +93,65 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
 </main>
 
 
+<div class="modal" tabindex="-1" id="modalEditColab">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar dados pessoais</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="nomAlunEdit" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nomColabEdit" placeholder="Digite o nome">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="telAlunEdit" class="form-label">Cpf</label>
+                        <input type="text" class="form-control" id="cpfColabEdit">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="dtNasColabEdit" class="form-label">Data de nascimento</label>
+                        <input type="date" class="form-control" id="dtNasColabEdit">
+                    </div>
+
+                    <div class="col-md-8">
+                        <label for="endAlunEdit" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="emailColabEdit">
+                    </div>
+
+                    <div class="col-md-8">
+                        <label for="endAlunEdit" class="form-label">Telefone</label>
+                        <input type="text" class="form-control" id="telColabEdit">
+                    </div>
+
+                    <div class="col-md-8">
+                        <label for="endColabEdit" class="form-label">Endereço</label>
+                        <input type="text" class="form-control" id="endColabEdit" placeholder="Rua, número, bairro">
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="salvarDadosPessoais()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 <div class="modal" tabindex="-1" id="modalEditarAluno">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -106,7 +165,7 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
                     <div class="card shadow-sm p-4">
                         <h6 class="mb-4 text-primary fw-bold">Dados pessoais</h6>
 
-                        <input type="text" name="" id="idEdit">
+                        <input type="hidden" name="" id="idEdit">
 
                         <div class="row g-3">
                             <div class="col-md-6">
