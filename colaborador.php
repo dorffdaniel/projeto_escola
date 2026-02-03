@@ -26,7 +26,7 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
                     </li>
 
                     <li class="nav-item m-2">
-                        <a class="btn btn-primary" aria-current="page" href="#">Cadastrar alunos</a>
+                        <a class="btn btn-primary" aria-current="page" href="cadastrarAlunos.php">Cadastrar alunos</a>
                     </li>
 
                 </ul>
