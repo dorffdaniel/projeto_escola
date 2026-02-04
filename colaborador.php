@@ -65,9 +65,20 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
 
     <section id="selecionarTurma">
         <div class="card">
-            <select name="" id="turma" onchange="getAlunosPorTurma()">
+            <div class="conteudoCardAalunos">
+                <select name="" id="turma" onchange="getAlunosPorTurma()">
 
-            </select>
+                </select>
+
+                <div class="containerContadorAlunos">
+                    <div class="cardContadorAlunos">
+                        <h4>totais de alunos</h4>
+
+                        <p id="totaisAlunosPorTurma"></p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
     <section id="tabelaTurma">
@@ -141,16 +152,6 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
 
 <div class="modal" tabindex="-1" id="modalEditarAluno">
     <div class="modal-dialog modal-lg">

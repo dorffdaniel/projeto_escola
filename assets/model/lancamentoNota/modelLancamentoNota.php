@@ -11,7 +11,8 @@ class LancamentoNota
 
         global $conn;
 
-        $stmt = $conn->prepare("SELECT * FROM turma");
+        $stmt = $conn->prepare("SELECT * FROM turma
+        order by nome");
         $stmt->execute();
 
         $res = $stmt->get_result();
@@ -272,5 +273,57 @@ class LancamentoNota
         $conn->close();
 
         return $arr;
+    }
+
+    function apagarAluno($idAlun)
+    {
+        global $conn;
+    }
+
+    function getTotalAlunosPorTurma($idTurm)
+    {
+        global $conn;
+
+        $stmt = $conn->prepare("SELECT count(*) as total
+        from alunos as a 
+        left join turma as t on a.turma_id = t.idTurm
+        where t.idTurm = ?");
+
+        $stmt->bind_param("i", $idTurm);
+        $stmt->execute();
+
+        $res = $stmt->get_result();
+
+        if ($res->num_rows > 0) {
+            $arr[] = $res->fetch_assoc();
+        } else {
+            $arr = ["erro" => "erro " . $conn->error];
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return json_encode($arr);
+    }
+
+
+    function totalAlunos()
+    {
+        global $conn;
+
+        $stmt = $conn->prepare("SELECT count(*) as total
+        from alunos");
+
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        if ($res->num_rows > 0) {
+            $arr[] = $res->fetch_assoc();
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return json_encode($arr);
     }
 }

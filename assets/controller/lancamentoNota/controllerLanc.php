@@ -70,4 +70,19 @@ if ($_POST['op'] == 'getTurma') {
 
     $resp = $lanc->adicionarNota($idColab, $idAlun, $nota, $periodo);
     echo $resp;
+} else if ($_POST['op'] == 'apagarAluno') {
+    $idAlun = $_POST['idAlun'];
+    $resp = $lanc->apagarAluno($idAlun);
+
+    echo $resp;
+} else if ($_POST['op'] == 'getTotalAlunosPorTurma') {
+
+    $idTurm = $_POST['idTurm'];
+
+    $resp = $lanc->getTotalAlunosPorTurma($idTurm);
+    echo $resp;
+} else if ($_POST['op'] == 'totalAlunos') {
+
+    $resp = $lanc->totalAlunos();
+    echo $resp;
 }

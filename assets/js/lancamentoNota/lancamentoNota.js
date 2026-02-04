@@ -17,7 +17,7 @@ function getTurmas() {
         .done(function (resp) {
 
             let op = '<option value="-1">selecione uma turma </option>';
-
+            /*  op += `<option value="-2">Selecione todos</option>` */
             resp.msg.forEach((el, index) => {
                 op += `<option value='${el.idTurm}'> ${el.nome} - ${el.ano}  </option>`
 
@@ -51,6 +51,10 @@ function getAlunosPorTurma() {
         return;
     }
 
+    /*   if (idTurm == "-2") {
+          getTodosAlunos();
+      } */
+
     let dados = new FormData();
     dados.append('idTurm', idTurm);
     dados.append('op', 'getAlunoTurma')
@@ -67,6 +71,8 @@ function getAlunosPorTurma() {
 
         .done(function (msg) {
 
+            getTotalAlunosPorTurma(idTurm);
+
             let mens = `<tr>`;
             if (msg.length > 0) {
                 msg.forEach((el, index) => {
@@ -78,7 +84,7 @@ function getAlunosPorTurma() {
                     mens += `<td class="text-center">${el.nota_final}</td>`
                     mens += `<td class="text-center"> 
                 <button class="btn btn-warning" onclick="editarAluno(${el.idAlun})">editar / lançar notas</button>
-                <button class="btn btn-danger">apgar</button>
+                <button class="btn btn-danger" onclick="apagarAluno(${el.idAlun})">apagar</button>
                 </td>`
                     mens += `</tr>`;
                 })
@@ -93,8 +99,6 @@ function getAlunosPorTurma() {
                 </td>`
                 mens += `</tr>`;
             }
-
-
 
             $("#resTabelaAluno").html(mens);
 
@@ -137,7 +141,6 @@ function getTodosAlunos() {
 
 
         .done(function (resp) {
-            console.log(resp)
 
             let mens = `<tr>`;
             if (resp.length > 0) {
@@ -150,7 +153,7 @@ function getTodosAlunos() {
                     mens += `<td class="text-center"> ${el.nota_final}</td>`
                     mens += `<td class="text-center"> 
                 <button class="btn btn-warning" onclick="editarAluno(${el.idAlun})">editar / lançar notas</button>
-                <button class="btn btn-danger">apgar</button>
+                <button class="btn btn-danger" onclick="apagarAluno(${el.idAlun})">apagar</button>
                 </td>`
                     mens += `</tr>`;
                 })
@@ -442,9 +445,95 @@ function adicionarNota() {
 }
 
 
+function apagarAluno(idAlun) {
+    let dados = new FormData();
+    dados.append('op', 'apagarAluno');
+    dados.append('idAlun', idAlun);
+
+    alert("funcao em desenvolvimento");
+
+    /* $.ajax({
+        url: 'assets/controller/lancamentoNota/controllerLanc.php',
+        method: 'Post',
+        data: dados,
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false
+    })
+
+        .done(function (resp) {
+            console.log(resp)
+        })
+
+        .fail(function (textStatus) {
+            console.log(textStatus);
+        }) */
+}
+
+
+function getTotalAlunosPorTurma(idTurm) {
+    let dados = new FormData();
+
+    dados.append('op', 'getTotalAlunosPorTurma');
+    dados.append('idTurm', idTurm);
+
+    $.ajax({
+        url: 'assets/controller/lancamentoNota/controllerLanc.php',
+        method: 'Post',
+        data: dados,
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false
+    })
+
+        .done(function (resp) {
+
+            resp.forEach(el => {
+                $("#totaisAlunosPorTurma").html(el.total);
+            })
+
+        })
+
+        .fail(function (textStatus) {
+            console.log(textStatus);
+        })
+}
+
+
+function totalAlunos() {
+    let dados = new FormData();
+    dados.append('op', 'totalAlunos');
+
+    $.ajax({
+        url: 'assets/controller/lancamentoNota/controllerLanc.php',
+        method: 'Post',
+        data: dados,
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false
+    })
+
+        .done(function (resp) {
+
+            resp.forEach(el => {
+                $("#totaisAlunosPorTurma").html(el.total);
+            })
+
+        })
+
+        .fail(function (textStatus) {
+            console.log(textStatus);
+        })
+}
+
+
 
 
 $(() => {
     getTurmas();
     getTodosAlunos();
+    totalAlunos();
 })
