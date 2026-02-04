@@ -62,6 +62,39 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
     </div>
 
     <div class="row m-0">
+        <div class="col-12 d-flex justify-content-center mt-3">
+            <div class="col-5 m-2">
+                <div class="card p-2">
+                    <h3 class="mb-3">Cadastrar uma turma</h3>
+                    <p>a turma sera criada no ano que se encontra de momento </p>
+                    <input type="text" class="form-control w-50" placeholder="Digite o nome da turma" id="novaTurma">
+                    <button class="btn btn-primary mt-4 w-25" onclick="cadastrarTurma()">adicionar turma</button>
+
+
+                </div>
+            </div>
+            <div class="col-5 m-2">
+                <div class="card p-3">
+                    <h3 class="mb-2">Cadastrar aluno</h3>
+                    <select name="" id="turmaCadAlun" class="w-25 mb-3">
+
+                    </select>
+
+                    <input type="text" class="form-control w-75 mb-2" placeholder="nome do aluno" id="nomeAlunCad">
+
+                    <input type="date" class="form-control w-75 mb-2" id="dataAlunCad">
+
+                    <input type="text" class="form-control w-75 mb-2" placeholder="telefone do aluno" id="telAlunCad">
+
+                    <input type="text" class="form-control w-75 mb-2" placeholder="endereco do aluno" id="endAlunCad">
+
+                    <button onclick="cadastrarAlunos()" class="btn btn-primary w-25">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row m-0">
         <div class="col-12 d-flex align-items-center justify-content-center ">
             <div class="col-5 m-2">
                 <div class="card p-2">
@@ -80,7 +113,7 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
             </div>
         </div>
     </div>
-
+ -->
 
 
 
