@@ -72,7 +72,8 @@ if ($_POST['op'] == 'getTurma') {
     echo $resp;
 } else if ($_POST['op'] == 'apagarAluno') {
     $idAlun = $_POST['idAlun'];
-    $resp = $lanc->apagarAluno($idAlun);
+    $turma = $_POST['turma'];
+    $resp = $lanc->apagarAluno($idAlun, $turma);
 
     echo $resp;
 } else if ($_POST['op'] == 'getTotalAlunosPorTurma') {

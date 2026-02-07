@@ -275,9 +275,32 @@ class LancamentoNota
         return $arr;
     }
 
-    function apagarAluno($idAlun)
+    function apagarAluno($idAlun, $turma)
     {
         global $conn;
+
+        $stmt1 = $conn->prepare("DELETE FROM avaliacoes 
+        WHERE aluno_id = ?");
+
+        $stmt1->bind_param("i", $idAlun);
+        $stmt1->execute();
+
+        $stmt2 = $conn->prepare("DELETE FROM alunos 
+            where idAlun = ? and turma_id = ?");
+
+        $stmt2->bind_param("ii", $idAlun, $turma);
+        $stmt2->execute();
+
+        if ($stmt2->affected_rows > 0) {
+            $arr = json_encode(["msg" => "Aluno apagado com sucesso"]);
+        } else {
+            $arr = json_encode(["erro" => "Erro ao apagar " . $conn->error]);
+        }
+
+        $stmt1->close();
+        $stmt2->close();
+
+        return $arr;
     }
 
     function getTotalAlunosPorTurma($idTurm)

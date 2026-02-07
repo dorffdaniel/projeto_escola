@@ -17,8 +17,9 @@ function getTurmas() {
         .done(function (resp) {
 
             let op = '<option value="-1">selecione uma turma </option>';
-            /*  op += `<option value="-2">Selecione todos</option>` */
+            op += `<option value="-2">Selecione todos</option>`
             resp.msg.forEach((el, index) => {
+
                 op += `<option value='${el.idTurm}'> ${el.nome} - ${el.ano}  </option>`
 
             })
@@ -51,9 +52,10 @@ function getAlunosPorTurma() {
         return;
     }
 
-    /*   if (idTurm == "-2") {
-          getTodosAlunos();
-      } */
+    if (idTurm == "-2") {
+        getTodosAlunos();
+        return;
+    }
 
     let dados = new FormData();
     dados.append('idTurm', idTurm);
@@ -153,7 +155,6 @@ function getTodosAlunos() {
                     mens += `<td class="text-center"> ${el.nota_final}</td>`
                     mens += `<td class="text-center"> 
                 <button class="btn btn-warning" onclick="editarAluno(${el.idAlun})">editar / lançar notas</button>
-                <button class="btn btn-danger" onclick="apagarAluno(${el.idAlun})">apagar</button>
                 </td>`
                     mens += `</tr>`;
                 })
@@ -447,12 +448,12 @@ function adicionarNota() {
 
 function apagarAluno(idAlun) {
     let dados = new FormData();
+    let turma = $("#turma").val();
     dados.append('op', 'apagarAluno');
     dados.append('idAlun', idAlun);
+    dados.append('turma', turma);
 
-    alert("funcao em desenvolvimento");
-
-    /* $.ajax({
+    $.ajax({
         url: 'assets/controller/lancamentoNota/controllerLanc.php',
         method: 'Post',
         data: dados,
@@ -464,11 +465,14 @@ function apagarAluno(idAlun) {
 
         .done(function (resp) {
             console.log(resp)
+
+            alerta("success", resp.msg);
+            getAlunosPorTurma();
         })
 
         .fail(function (textStatus) {
             console.log(textStatus);
-        }) */
+        })
 }
 
 
