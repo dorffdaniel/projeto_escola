@@ -20,13 +20,21 @@ function getColaborador() {
             }
 
             console.log(resp)
-            console.log(resp.nome)
             $("#nomeColab").html(resp.nome);
             $("#cpfColab").html(resp.cpf);
             $("#dtNascColab").html(resp.dataNasc);
             $("#emailColab").html(resp.email);
             $("#telColab").html(resp.telefone);
             $("#endColab").html(resp.endereco);
+            if (resp.imgPerfil) {
+                let img = `<img src="assets/imagens/imgColab/${resp.imgPerfil}">`;
+                $("#imgPerfil").html(img);
+            } else {
+                let img = `<img src="assets/imagens/imgColab/noimg.jpg">`;
+                $("#imgPerfil").html(img);
+            }
+
+
 
 
             // modal edit
@@ -85,7 +93,6 @@ function salvarDadosPessoais() {
     })
 
         .done(function (resp) {
-            console.log(resp)
 
             if (resp.msg) {
                 alerta("success", resp.msg);

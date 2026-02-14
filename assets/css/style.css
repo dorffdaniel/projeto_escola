@@ -24,6 +24,15 @@
 
 /* pagina colaborador.php */
 
+#imgPerfil img {
+    width: 250px;
+    height: 250px;
+    border-radius: 100%;
+    margin-bottom: 1.5rem;
+    border: 2px solid #000;
+}
+
+
 #mainColaborador {
     padding: 0 1rem;
 }

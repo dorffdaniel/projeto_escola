@@ -47,6 +47,9 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
         </div>
         <div class="offcanvas-body">
             <div id="dadosPerfil" class="mt-3">
+
+                <div id="imgPerfil"></div>
+
                 <p>Nome: <span id="nomeColab"></span></p>
                 <p>Cpf: <span id="cpfColab"></span></p>
                 <p>Data Nascimento: <span id="dtNascColab"></span></p>
@@ -113,6 +116,7 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
             </div>
             <div class="modal-body">
                 <div class="row g-3">
+
                     <div class="col-md-6">
                         <label for="nomAlunEdit" class="form-label">Nome</label>
                         <input type="text" class="form-control" id="nomColabEdit" placeholder="Digite o nome">
