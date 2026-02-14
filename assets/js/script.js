@@ -17,6 +17,7 @@ function cadastrar() {
     let tel = $('#telCad').val()
     let end = $('#endCad').val()
     let senha = $('#senhaCad').val()
+    let imgPerfil = $("#imgPerfil")[0].files[0];
 
     let dados = new FormData();
     dados.append('nome', nome)
@@ -26,20 +27,28 @@ function cadastrar() {
     dados.append('tel', tel)
     dados.append('end', end)
     dados.append('senha', senha)
+    dados.append('imgPerfil', imgPerfil)
     dados.append('op', 1)
+
 
     $.ajax({
         url: 'assets/controller/cadastro/controllerCad_professor.php',
         method: 'POST',
         data: dados,
-        dataType: 'html',
+        dataType: 'json',
         cache: false,
         contentType: false,
         processData: false
     })
 
         .done(function (resp) {
-            alerta("success", resp);
+
+            if (resp.status) {
+                alerta("success", resp.msg);
+            } else {
+                console.log(resp);
+            }
+
         })
 
         .fail(function (jqXHR, textStatus) {

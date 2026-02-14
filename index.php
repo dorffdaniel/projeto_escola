@@ -65,6 +65,11 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
                     <input type="password" class="form-control" id="senhaCad" placeholder="Digite uma senha">
                 </div>
 
+                <div class="mb-3">
+                    <label for="formGroupExampleInput" class="form-label">Adicione uma foto: </label>
+                    <input type="file" class="form-control" id="imgPerfil">
+                </div>
+
                 <button type="button" class="btn btn-primary mb-2" onclick="cadastrar()">Cadastrar</button>
 
                 <p>ja tenho uma conta <span onclick="btnLogin()">Login</span></p>

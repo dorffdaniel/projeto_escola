@@ -5,15 +5,15 @@ require __DIR__ . '/../../model/bd.php';
 class Cadastro
 {
 
-    function cadastrar($nome, $cpf, $dtNasc, $email, $tel, $end, $senha)
+    function cadastrar($nome, $cpf, $dtNasc, $email, $tel, $end, $senha, $caminho)
     {
         global $conn;
 
         $msg = "";
 
-        $stmt = $conn->prepare("INSERT INTO colaboradores(nome, cpf, dataNasc, email, telefone, endereco, senha ) values (?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO colaboradores(nome, cpf, dataNasc, email, telefone, endereco, senha, imgPerfil ) values (?, ?, ?, ?, ?, ?, ?, ?)");
 
-        $stmt->bind_param("sssssss", $nome, $cpf, $dtNasc, $email, $tel, $end, $senha);
+        $stmt->bind_param("ssssssss", $nome, $cpf, $dtNasc, $email, $tel, $end, $senha, $caminho);
 
         $stmt->execute();
 
@@ -23,7 +23,6 @@ class Cadastro
 
         $stmt->close();
         $conn->close();
-
         return $msg;
     }
 }
