@@ -1,5 +1,6 @@
 # 🎓 Projeto Escola
 <img src="assets/imagens/design.png" alt="Interface do Projeto Escola">
+<img src="assets/imagens/design2.png" alt="Interface do Projeto Escola">
 
 ## 📌 Status do Projeto
 🚧 Em desenvolvimento
