@@ -52,4 +52,25 @@ class Colaborador
         $conn->close();
         return $arr;
     }
+
+    function salvarImgPerfil($nomeUnico, $id)
+    {
+        global $conn;
+
+        $stmt = $conn->prepare("UPDATE colaboradores
+        SET imgPerfil = ?
+        WHERE id = ?");
+
+        $stmt->bind_param("si", $nomeUnico, $id);
+        $stmt->execute();
+
+        $resp = $stmt->affected_rows > 0;
+
+        $stmt->close();
+        $conn->close();
+
+        if ($resp) {
+            return $resp;
+        }
+    }
 }

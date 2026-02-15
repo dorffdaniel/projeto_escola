@@ -47,8 +47,21 @@ include_once __DIR__ . '/../projetoescola/assets/pages/head.php';
         </div>
         <div class="offcanvas-body">
             <div id="dadosPerfil" class="mt-3">
+                <div class="text-center mb-4">
 
-                <div id="imgPerfil"></div>
+                    <div id="imgPerfil"></div>
+
+                    <div class="d-flex justify-content-center gap-2">
+
+                        <button class="btn btn-warning" onclick="editarFoto()">editar foto</button>
+
+                        <button class="btn btn-primary ocultar" onclick="SalvarFoto()" id="btnSalvarImg">Salvar
+                            foto</button>
+                    </div>
+
+                    <input type="file" class="escond" id="selecImg" onchange="imgAtual()">
+
+                </div>
 
                 <p>Nome: <span id="nomeColab"></span></p>
                 <p>Cpf: <span id="cpfColab"></span></p>

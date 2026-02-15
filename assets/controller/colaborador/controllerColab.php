@@ -24,4 +24,33 @@ if ($_POST['op'] && $_POST['op'] == 'getColab') {
 
     $resp = $colab->salvarDadosPessoais($id, $nome, $cpf, $dtNasc, $email, $tel, $end);
     echo $resp;
+} else if ($_POST['op'] == 'salvarImg') {
+    $img = $_FILES['img'];
+
+    $nomeUnico =  uniqid() . "-" . $img['name'];
+
+    $pastaImg = __DIR__ . '/../../imagens/imgColab/';
+
+    $caminho = $pastaImg . $nomeUnico;
+
+    if (!move_uploaded_file($img['tmp_name'], $caminho)) {
+        echo json_encode([
+            "status" => false,
+            "msg" => "erro ao guardar a imagem"
+        ]);
+    }
+
+    $resp = $colab->salvarImgPerfil($nomeUnico, $id);
+
+    if ($resp) {
+        echo json_encode([
+            "status" => true,
+            "msg" => "Imagem salva com sucesso"
+        ]);
+    } else {
+        echo json_encode([
+            "status" => false,
+            "msg" => "falha ao salvar imagem"
+        ]);
+    }
 }

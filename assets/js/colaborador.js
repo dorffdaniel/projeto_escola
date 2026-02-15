@@ -27,7 +27,7 @@ function getColaborador() {
             $("#telColab").html(resp.telefone);
             $("#endColab").html(resp.endereco);
             if (resp.imgPerfil) {
-                let img = `<img src="assets/imagens/imgColab/${resp.imgPerfil}">`;
+                let img = `<img src="assets/imagens/imgColab/${resp.imgPerfil}" id="fotoPerfilColab">`;
                 $("#imgPerfil").html(img);
             } else {
                 let img = `<img src="assets/imagens/imgColab/noimg.jpg">`;
@@ -108,6 +108,65 @@ function salvarDadosPessoais() {
 
 }
 
+//primeira parte 
+// abro o input files para adicionar img
+function editarFoto() {
+    let img = $("#fotoPerfilColab").attr('src');
+
+    $("#selecImg").click();
+
+    console.log(img);
+
+}
+
+// no input files tem um onchange colocando esta img onde fica mesmoa a tag img
+function imgAtual() {
+    let imgSelecionada = $("#selecImg")[0].files[0];
+
+    if (imgSelecionada) {
+        const urlTemp = URL.createObjectURL(imgSelecionada);
+
+        $("#fotoPerfilColab").attr("src", urlTemp);
+
+        $("#btnSalvarImg").removeClass('ocultar');
+    }
+
+}
+
+function SalvarFoto() {
+    let imgFinal = $("#selecImg")[0].files[0];
+
+    console.log(imgFinal)
+
+    let dados = new FormData();
+    dados.append('op', 'salvarImg');
+    dados.append('img', imgFinal);
+
+    $.ajax({
+        url: 'assets/controller/colaborador/controllerColab.php',
+        method: 'POST',
+        data: dados,
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false
+    })
+
+        .done(function (resp) {
+
+            if (resp.status) {
+                alerta("success", resp.msg);
+            } else {
+                console.log(resp);
+            }
+
+        })
+
+        .fail(function (textStatus) {
+            console.log(textStatus)
+        })
+
+}
 
 
 
